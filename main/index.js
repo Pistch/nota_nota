@@ -1,5 +1,5 @@
 const initWindows = require('./windows');
-const initStore = require('./store'); 
+const initStore = require('./store');
 
 const store = initStore();
 

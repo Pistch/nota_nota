@@ -1,10 +1,10 @@
 const path = require('path');
 const {BrowserWindow, globalShortcut, ipcMain} = require('electron');
 
-function createWindow(store) {
+module.exports = function(store) {
   const win = new BrowserWindow({
-    width: 600,
-    height: 300,
+    width: 800,
+    height: 140,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -14,23 +14,16 @@ function createWindow(store) {
 
   function toggleWindow() {
     if (win.isFocused() && win.isVisible()) {
-        win.hide();
-      } else {
-        win.show();
-        win.focus();
-      }
+      win.hide();
+    } else {
+      win.show();
+      win.focus();
+    }
   }
 
-  win.loadFile(path.resolve(__dirname, 'index.html'));
+  win.loadFile(path.resolve(__dirname, 'static/index.html'));
   globalShortcut.register('Alt+Shift+X', toggleWindow);
-  
-  ipcMain.on('hide', toggleWindow);
-  ipcMain.on('new-item', (event, payload) => {
-    console.log(payload);
-  });
-  win.on('blur', () => {
-    win.hide();
-  });
-}
 
-module.exports = createWindow;
+  ipcMain.on('hide', toggleWindow);
+  win.on('blur', () => win.hide());
+};

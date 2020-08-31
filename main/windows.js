@@ -3,9 +3,9 @@ const {app} = require('electron');
 const initMainWindow = require('../windows/main');
 const initNewItemWindom = require('../windows/newItem');
 
-module.exports = async function() {
-    await app.whenReady();
+module.exports = async function(store) {
+  await app.whenReady();
 
-    initMainWindow();
-    initNewItemWindom();
-}
+  initMainWindow(store);
+  initNewItemWindom(store);
+};

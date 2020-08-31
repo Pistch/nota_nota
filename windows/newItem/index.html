@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <style>
+      html, body, .input {
+        width: 100%;
+        height: 100%;
+      }
+
+      .input {
+        border-radius: 0;
+        outline: none;
+        border: 3px #777 solid;
+        background: #DADADA;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" class="input" id="new-item" autofocus />
+  </body>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    const input = document.getElementById('new-item');
+
+    window.addEventListener('keyup', (event) => {
+      if (event.key === 'Escape') {
+        ipcRenderer.send('hide'); 
+
+        return;
+      }
+
+      if (event.key === 'Enter') {
+        ipcRenderer.send('new-item', input.value);
+        ipcRenderer.send('hide'); 
+
+        return;
+      }
+    });
+
+    window.addEventListener('focus', () => {
+      input.focus();
+    });
+  </script>
+</html>

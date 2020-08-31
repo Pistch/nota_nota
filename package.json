@@ -1,0 +1,23 @@
+{
+  "name": "nota_nota",
+  "version": "0.0.1",
+  "description": "Desktop task and notes manager",
+  "main": "main/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ./main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pistch/nota_nota.git"
+  },
+  "author": "pistch@yandex.ru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pistch/nota_nota/issues"
+  },
+  "homepage": "https://github.com/Pistch/nota_nota#readme",
+  "devDependencies": {
+    "electron": "10.1.0"
+  }
+}

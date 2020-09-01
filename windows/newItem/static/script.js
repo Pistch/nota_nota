@@ -4,7 +4,7 @@ const input = document.getElementById('new-item');
 
 window.addEventListener('keyup', (event) => {
   if (event.key === 'Escape') {
-    ipcRenderer.send('hide');
+    ipcRenderer.send('new-item-window_hide');
     input.value = '';
 
     return;
@@ -15,7 +15,7 @@ window.addEventListener('keyup', (event) => {
       type: 'items.create',
       payload: input.value,
     });
-    ipcRenderer.send('hide');
+    ipcRenderer.send('new-item-window_hide');
     input.value = '';
 
     return;

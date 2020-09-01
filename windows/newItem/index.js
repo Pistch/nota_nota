@@ -22,8 +22,8 @@ module.exports = function(store) {
   }
 
   win.loadFile(path.resolve(__dirname, 'static/index.html'));
-  globalShortcut.register('Alt+Shift+X', toggleWindow);
+  globalShortcut.register('Alt+Shift+C', toggleWindow);
 
-  ipcMain.on('hide', toggleWindow);
+  ipcMain.on('new-item-window_hide', toggleWindow);
   win.on('blur', () => win.hide());
 };

@@ -12,11 +12,20 @@ module.exports = function(store) {
     frame: false,
   });
 
+  function isWindowActive() {
+    return win.isFocused() && win.isVisible();
+  }
+
+  function sendStateToWindow() {
+    win.webContents.send('state-update', store.store.getState());
+  }
+
   function toggleWindow() {
-    if (win.isFocused() && win.isVisible()) {
+    if (isWindowActive()) {
       win.hide();
     } else {
       win.show();
+      sendStateToWindow();
       win.focus();
     }
   }
@@ -24,9 +33,8 @@ module.exports = function(store) {
   win.loadFile(path.resolve(__dirname, 'static/index.html'));
   globalShortcut.register('Alt+Shift+Z', toggleWindow);
 
-  ipcMain.on('hide', toggleWindow);
-  ipcMain.on('new-item', (event, payload) => {
-    console.log(payload);
-  });
+  ipcMain.on('main-window_hide', toggleWindow);
   win.on('blur', () => win.hide());
+
+  store.store.subscribe(sendStateToWindow);
 };

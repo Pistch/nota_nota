@@ -1,4 +1,8 @@
-const {configureStore, createAction, createReducer} = require('@reduxjs/toolkit');
+const {
+  configureStore,
+  createAction,
+  createReducer,
+} = require('@reduxjs/toolkit');
 const {ipcMain} = require('electron');
 
 const INITIAL_STATE = {
@@ -41,6 +45,8 @@ function initStore(params) {
   });
 
   store.subscribe(() => console.log(store.getState()));
+
+  return store;
 }
 
 module.exports = () => ({

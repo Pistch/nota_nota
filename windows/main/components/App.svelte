@@ -64,10 +64,12 @@
 
   function handleKeyDown(evt) {
     if (evt.keyCode === 70 && evt.metaKey) {
-      const focusedItem = items[selectedItemIndex];
+      const selectedItem = items[selectedItemIndex];
 
-      if (focusedItem) {
-        onFocus(focusedItem);
+      if (focusedItem === selectedItem) {
+        onFocus(null);
+      } else if (selectedItem) {
+        onFocus(selectedItem);
       }
     }
   }

@@ -9,7 +9,7 @@
     "start": "npm-run-all --print-label --parallel start:*",
     "start:electron": "npm run start:electron:wait && npm run start:electron:watch",
     "start:electron:wait": "npm run start:electron:wait:new-item && npm run start:electron:wait:main",
-    "start:electron:wait:new-item": "wait-on windows/new-item/static/build.js windows/new-item/static/build.css",
+    "start:electron:wait:new-item": "wait-on windows/new-item/static/build.js",
     "start:electron:wait:main": "wait-on windows/main/static/build.js windows/main/static/build.css",
     "start:electron:watch": "electromon ./main",
     "start:webpack": "npm-run-all --print-label --parallel start:webpack:*",

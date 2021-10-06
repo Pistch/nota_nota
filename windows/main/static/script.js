@@ -16,7 +16,6 @@ const app = new App({
         type: 'items.create',
         payload: newValue,
       });
-      ipcRenderer.send('main-window_hide');
       app.$set({inputValue: ''});
     },
   },

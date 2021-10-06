@@ -14,7 +14,7 @@
     if (focusedItemIndex === null) {
       focusedItemIndex = 0;
     } else if (focusedItemIndex === items.length - 1) {
-      focusedItemIndex = null;
+      focusedItemIndex = 0;
     } else {
       focusedItemIndex++;
     }
@@ -28,10 +28,18 @@
     if (focusedItemIndex === null) {
       focusedItemIndex = items.length - 1;
     } else if (focusedItemIndex === 0) {
-      focusedItemIndex = null;
+      focusedItemIndex = items.length - 1;
     } else {
       focusedItemIndex--;
     }
+  }
+
+  function focusItem(index) {
+    if (!items[index]) {
+      return;
+    }
+
+    focusedItemIndex = index;
   }
 
   function handleKeyUp(evt) {
@@ -57,10 +65,17 @@
   }
 </script>
 
-<input autofocus value={inputValue} on:change={handleChange} class="input" on:keyup={handleKeyUp} />
+<input
+  autofocus
+  value={inputValue}
+  on:change={handleChange}
+  on:keyup={handleKeyUp}
+  on:blur|self={evt => evt.target.focus()}
+  class="input"
+/>
 <div class="items">
   {#each items as item, i}
-    <div class:item class:focused={i === focusedItemIndex}>{item}</div>
+    <div class:item class:focused={i === focusedItemIndex} on:click={() => focusItem(i)}>{item}</div>
   {/each}
 </div>
 

@@ -18,4 +18,4 @@
   }
 </script>
 
-<input autofocus value={inputValue} on:change={handleChange} class="input" on:keyup={handleKeyUp}/>
+<input autofocus value={inputValue} on:change={handleChange} class="input" on:keyup={handleKeyUp} />

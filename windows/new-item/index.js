@@ -1,5 +1,7 @@
 const path = require('path');
-const {BrowserWindow, globalShortcut, ipcMain, app} = require('electron');
+const {BrowserWindow, globalShortcut, ipcMain} = require('electron');
+
+const {windowVisibilityUtilsFactory} = require('../utils');
 
 module.exports = function(store) {
   const win = new BrowserWindow({
@@ -11,24 +13,11 @@ module.exports = function(store) {
     show: false,
     frame: false,
   });
-
-  function hideWindow() {
-    win.hide();
-    app.hide();
-  }
-
-  function toggleWindow() {
-    if (win.isFocused() && win.isVisible()) {
-      hideWindow();
-    } else {
-      win.show();
-      win.focus();
-    }
-  }
+  const {toggleWindow, hideWindow} = windowVisibilityUtilsFactory(win);
 
   win.loadFile(path.resolve(__dirname, 'static/index.html'));
   globalShortcut.register('Alt+Shift+C', toggleWindow);
 
   ipcMain.on('new-item-window_hide', toggleWindow);
-  win.on('blur', () => hideWindow());
+  win.on('blur', hideWindow);
 };

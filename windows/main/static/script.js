@@ -18,9 +18,18 @@ const app = new App({
       });
       app.$set({inputValue: ''});
     },
+    onFocus: (item) => {
+      ipcRenderer.send('redux-action', {
+        type: 'items.focus',
+        payload: item,
+      });
+    },
   },
 });
 
 ipcRenderer.on('state-update', (_, newState) => {
-  app.$set({items: newState.items});
+  app.$set({
+    items: newState.items,
+    focusedItem: newState.focusedItem,
+  });
 });

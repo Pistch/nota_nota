@@ -23,7 +23,7 @@ module.exports = function(store) {
   globalShortcut.register('Alt+Shift+Z', toggleWindow);
 
   ipcMain.on('main-window_hide', toggleWindow);
-  win.on('blur', hideWindow);
+  // win.on('blur', hideWindow);
 
   store.store.subscribe(sendStateToWindow);
 };

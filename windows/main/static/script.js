@@ -1,33 +1,27 @@
 const {ipcRenderer} = require('electron');
 
-const input = document.getElementById('new-item');
-const itemsField = document.querySelector('.items');
+const {App} = require('./build.js');
 
-window.addEventListener('keyup', (event) => {
-  if (event.key === 'Escape') {
-    ipcRenderer.send('main-window_hide');
-    input.value = '';
-
-    return;
-  }
-
-  if (event.key === 'Enter') {
-    ipcRenderer.send('redux-action', {
-      type: 'items.create',
-      payload: input.value,
-    });
-    ipcRenderer.send('main-window_hide');
-    input.value = '';
-
-    return;
-  }
-});
-
-window.addEventListener('focus', () => {
-  input.focus();
+const app = new App({
+  target: document.getElementById('root'),
+  props: {
+    items: [],
+    inputValue: '',
+    onClose: () => {
+      ipcRenderer.send('main-window_hide');
+      app.$set({inputValue: ''});
+    },
+    onSend: (newValue) => {
+      ipcRenderer.send('redux-action', {
+        type: 'items.create',
+        payload: newValue,
+      });
+      ipcRenderer.send('main-window_hide');
+      app.$set({inputValue: ''});
+    },
+  },
 });
 
 ipcRenderer.on('state-update', (_, newState) => {
-  itemsField.textContent = newState.items
-      .map((itemText) => `"${itemText}"`).join(', ');
+  app.$set({items: newState.items});
 });

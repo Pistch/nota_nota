@@ -6,11 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "start": "npm-run-all -p start:*",
-    "start:electron": "npm-run-all -p start:electron:wait:* && npm run start:electron:watch",
+    "start": "npm-run-all --print-label --parallel start:*",
+    "start:electron": "npm run start:electron:wait && npm run start:electron:watch",
+    "start:electron:wait": "npm run start:electron:wait:new-item && npm run start:electron:wait:main",
     "start:electron:wait:new-item": "wait-on windows/new-item/static/build.js",
+    "start:electron:wait:main": "wait-on windows/main/static/build.js",
     "start:electron:watch": "electromon ./main",
-    "start:webpack": "webpack --config ./webpack/webpack.new-item.config.js --watch"
+    "start:webpack": "npm-run-all --print-label --parallel start:webpack:*",
+    "start:webpack:main": "webpack --config ./webpack/webpack.main.config.js --watch",
+    "start:webpack:new-item": "webpack --config ./webpack/webpack.new-item.config.js --watch"
   },
   "repository": {
     "type": "git",

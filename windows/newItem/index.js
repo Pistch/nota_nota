@@ -1,5 +1,5 @@
 const path = require('path');
-const {BrowserWindow, globalShortcut, ipcMain} = require('electron');
+const {BrowserWindow, globalShortcut, ipcMain, app} = require('electron');
 
 module.exports = function(store) {
   const win = new BrowserWindow({
@@ -12,9 +12,14 @@ module.exports = function(store) {
     frame: false,
   });
 
+  function hideWindow() {
+    win.hide();
+    app.hide();
+  }
+
   function toggleWindow() {
     if (win.isFocused() && win.isVisible()) {
-      win.hide();
+      hideWindow();
     } else {
       win.show();
       win.focus();
@@ -25,5 +30,5 @@ module.exports = function(store) {
   globalShortcut.register('Alt+Shift+C', toggleWindow);
 
   ipcMain.on('new-item-window_hide', toggleWindow);
-  win.on('blur', () => win.hide());
+  win.on('blur', () => hideWindow());
 };

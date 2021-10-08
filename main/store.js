@@ -21,10 +21,18 @@ const rootReducer = createReducer(INITIAL_STATE, {
     ...state,
     items: [...state.items, action.payload],
   }),
-  [actions.items.delete().type]: (state, action) => ({
-    ...state,
-    items: state.items.filter((item) => item !== action.payload),
-  }),
+  [actions.items.delete.type]: (state, action) => {
+    const newState = {
+      ...state,
+      items: state.items.filter((item) => item !== action.payload),
+    };
+
+    if (action.payload === state.focusedItem) {
+      newState.focusedItem = null;
+    }
+
+    return newState;
+  },
   [actions.items.focus.type]: (state, action) => ({
     ...state,
     focusedItem: action.payload,

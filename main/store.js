@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 const actions = {
   items: {
     create: createAction('CREATE_ITEM'),
+    delete: createAction('DELETE_ITEM'),
     focus: createAction('FOCUS_ITEM'),
   },
 };
@@ -19,6 +20,10 @@ const rootReducer = createReducer(INITIAL_STATE, {
   [actions.items.create.type]: (state, action) => ({
     ...state,
     items: [...state.items, action.payload],
+  }),
+  [actions.items.delete().type]: (state, action) => ({
+    ...state,
+    items: state.items.filter((item) => item !== action.payload),
   }),
   [actions.items.focus.type]: (state, action) => ({
     ...state,

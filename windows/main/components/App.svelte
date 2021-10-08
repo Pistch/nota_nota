@@ -5,6 +5,7 @@
   export let onClose = () => {};
   export let onSend = () => {};
   export let onFocus = () => {};
+  export let onDelete = () => {};
 
   let selectedItemIndex = null;
 
@@ -63,14 +64,22 @@
   }
 
   function handleKeyDown(evt) {
-    if (evt.keyCode === 70 && evt.metaKey) {
-      const selectedItem = items[selectedItemIndex];
+    if (!evt.metaKey) {
+      return;
+    }
 
+    const selectedItem = items[selectedItemIndex];
+
+    if (evt.keyCode === 70) {
       if (focusedItem === selectedItem) {
         onFocus(null);
       } else if (selectedItem) {
         onFocus(selectedItem);
       }
+    }
+
+    if (evt.key === 'Delete' || evt.key === 'Backspace') {
+      onDelete(selectedItem);
     }
   }
 

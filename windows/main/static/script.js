@@ -24,6 +24,12 @@ const app = new App({
         payload: item,
       });
     },
+    onDelete: (item) => {
+      ipcRenderer.send('redux-action', {
+        type: 'items.delete',
+        payload: item,
+      });
+    },
   },
 });
 

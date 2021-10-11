@@ -5,8 +5,10 @@ const {
 } = require('@reduxjs/toolkit');
 const {ipcMain} = require('electron');
 
+const {readStore, writeStore} = require('./store-persister');
+
 const INITIAL_STATE = {
-  items: [],
+  items: readStore(),
   focusedItem: null,
 };
 const actions = {
@@ -64,6 +66,9 @@ function initStore(params) {
   });
 
   store.subscribe(() => console.log(store.getState()));
+  store.subscribe(() => {
+    writeStore(store.getState().items);
+  });
 
   return store;
 }

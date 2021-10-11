@@ -24,6 +24,7 @@ module.exports = function(store) {
 
   ipcMain.on('main-window_hide', toggleWindow);
   win.on('blur', hideWindow);
+  win.on('show', sendStateToWindow);
 
   store.store.subscribe(sendStateToWindow);
 };

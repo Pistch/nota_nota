@@ -34,5 +34,6 @@ module.exports = function(store) {
   }
 
   win.loadFile(path.resolve(__dirname, 'static/index.html'));
+  win.on('show', applyStateUpdate);
   store.store.subscribe(applyStateUpdate);
 };
